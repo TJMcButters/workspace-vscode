@@ -1,0 +1,5 @@
+﻿  main.cpp
+  pointersandreferences.cpp
+  Generating Code...
+pointersandreferences.obj : error LNK2005: _main already defined in main.obj
+C:\dev\helloworld\bin\Win32\Debug\helloworld.exe : fatal error LNK1169: one or more multiply defined symbols found

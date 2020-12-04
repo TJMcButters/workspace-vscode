@@ -1,0 +1,5 @@
+﻿  Source.cpp
+C:\dev\pointersandreferences\pointersandreferences\Source.cpp(26,15): error C2100: illegal indirection
+C:\dev\pointersandreferences\pointersandreferences\Source.cpp(26,7): error C2088: '<<': illegal for class
+C:\dev\pointersandreferences\pointersandreferences\Source.cpp(30,15): error C2100: illegal indirection
+C:\dev\pointersandreferences\pointersandreferences\Source.cpp(30,7): error C2088: '<<': illegal for class
