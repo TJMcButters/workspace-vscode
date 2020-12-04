@@ -78,6 +78,7 @@ def main():
         num = int(data_image[pos:pos + 2], 16)
         image_file.write(num.to_bytes(1, "big"))
         pos += 2
+    print(image_destination)
 
     text_file = open(file_destination, 'wb')
     post = 0
@@ -85,6 +86,7 @@ def main():
         num = int(data_file[post:post + 2], 16)
         text_file.write(num.to_bytes(1, "big"))
         post += 2
+    print(file_destination)
 
 
 if __name__ == '__main__':
