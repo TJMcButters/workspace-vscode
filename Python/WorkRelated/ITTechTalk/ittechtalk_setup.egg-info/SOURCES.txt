@@ -1,0 +1,13 @@
+setup.py
+Code/__init__.py
+Code/Keylogger/__init__.py
+Code/Keylogger/keylogger.py
+Code/PasswordStrengthCalculators/__init__.py
+Code/PasswordStrengthCalculators/passwordstrength.py
+Code/PasswordStrengthCalculators/passwordstrengthreal.py
+Code/WordAnalysis/__init__.py
+Code/WordAnalysis/wordsAndLetters.py
+ittechtalk_setup.egg-info/PKG-INFO
+ittechtalk_setup.egg-info/SOURCES.txt
+ittechtalk_setup.egg-info/dependency_links.txt
+ittechtalk_setup.egg-info/top_level.txt

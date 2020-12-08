@@ -3,13 +3,18 @@ autopep8==1.5.4
 black==20.8b1
 click==7.1.2
 et-xmlfile==1.0.1
+-e git+https://github.com/TJMcButters/workspace-vscode.git@14a56df91c6745627578a64eb967f718114b72a3#egg=ittechtalk_setup&subdirectory=python\workrelated\ittechtalk
 jdcal==1.4.1
+keyboard==0.13.5
 mypy-extensions==0.4.3
 openpyxl==3.0.5
 pathspec==0.8.1
 pycodestyle==2.6.0
+pynput==1.7.1
 regex==2020.11.13
+six==1.15.0
 tk==0.1.0
 toml==0.10.2
 typed-ast==1.4.1
 typing-extensions==3.7.4.3
+UNKNOWN==0.0.0

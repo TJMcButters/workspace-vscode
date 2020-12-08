@@ -57,7 +57,7 @@ def main():
     values.close()
 
     combined_size = os.path.getsize(new_file)
-    print("The original image size is: {} Bytes\nThe original file size is: {} Bytes\nAnd the new combined size is {} Bytes".format(image_size, file_size, combined_size)) 
+    print("The original image size is: {} Bytes\nThe original file size is: {} Bytes\nAnd the new combined size is: {} Bytes".format(image_size, file_size, combined_size)) 
 
 
 if __name__ == '__main__':

